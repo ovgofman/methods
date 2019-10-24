@@ -1,0 +1,46 @@
+private static final String UNDERSCORE = "_";
+    private static final String SPACE = " ";
+    private static final String BLANK_STRING = "";
+    private static final String PERIOD = ".";
+    
+    public static void main(String[] args) throws ScriptException {
+        String s = "“Umm, thanks.” I say, reaching out to shake her hand. “Yeah, about this\n" +
+                "laptop, can you get a hold of someone in desktop support? There’s some\n" +
+                "serious crap headed our way from Phoenix, and I’m going to need it.”";
+        
+        System.out.println(removeOneWordPerSentence(s));
+    }
+    
+    /**
+     * Method removes random word in a sentence.
+     *
+     * @param text - to be edit
+     * @return String
+     */
+    public static String removeRandomWord(String text) {
+        String[] sentences = text.trim().split("\\.");
+        ArrayList<String> listOfWords = new ArrayList<>();
+        Random r = new Random();
+
+        for (String sentence : sentences) {
+            String[] arrayOfWords = sentence.trim().split(SPACE);
+            int currentLength = listOfWords.size();
+            int random = r.nextInt(arrayOfWords.length);
+            for (String word : arrayOfWords) {
+                listOfWords.add(word);
+            }
+            listOfWords.add(PERIOD);
+            if (listOfWords.get(currentLength + random) != UNDERSCORE) {
+                listOfWords.set(currentLength + random, UNDERSCORE);
+            }
+        }
+
+        while (listOfWords.remove(BLANK_STRING)) {
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (String word : listOfWords) {
+            sb.append(word + SPACE);
+        }
+        return sb.toString().replace(" . ", ". ");
+    }
